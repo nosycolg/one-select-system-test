@@ -1,0 +1,28 @@
+{
+  "name": "one-select-system-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosycolg/one-select-system-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nosycolg/one-select-system-test/issues"
+  },
+  "homepage": "https://github.com/nosycolg/one-select-system-test#readme",
+  "devDependencies": {
+    "@types/node": "^20.12.10",
+    "prisma": "^5.13.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.13.0"
+  }
+}

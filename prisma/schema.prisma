@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Router {
+  id        Int        @id @default(autoincrement())
+  IPv4      String
+  IPv6      String
+  brand     String
+  model     String
+  status    Status
+  customers Customer[]
+
+  @@map("routers")
+}
+
+model Customer {
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
+  type         CustomerType
+  cpf          String?      @unique
+  cnpj         String?      @unique
+  dateOfBirth  DateTime?
+  street       String?
+  streetNumber String?
+  cep          String?
+  district     String?
+  city         String?
+  status       Status // or boolean
+  Router       Router?      @relation(fields: [routerId], references: [id])
+  routerId     Int?
+
+  @@map("customers")
+}
+
+enum CustomerType {
+  PERSON
+  COMPANY
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
