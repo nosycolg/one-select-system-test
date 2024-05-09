@@ -3,7 +3,7 @@ include .env
 .PHONY: up
 
 up:
-	docker-compose up && npm run start:dev
+	docker-compose up
 
 .PHONY: down
 

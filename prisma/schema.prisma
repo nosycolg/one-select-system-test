@@ -13,7 +13,7 @@ model Router {
   IPv6      String
   brand     String
   model     String
-  status    Status
+  status    Status?    @default(ACTIVE) // or boolean
   customers Customer[]
 
   @@map("routers")
@@ -21,17 +21,17 @@ model Router {
 
 model Customer {
   id           Int          @id @default(autoincrement())
-  name         String       @unique
+  name         String
   type         CustomerType
   cpf          String?      @unique
   cnpj         String?      @unique
-  dateOfBirth  DateTime?
-  street       String?
-  streetNumber String?
-  cep          String?
-  district     String?
-  city         String?
-  status       Status // or boolean
+  dateOfBirth  DateTime
+  street       String
+  streetNumber String
+  cep          String
+  district     String
+  city         String
+  status       Status?      @default(ACTIVE) // or boolean
   Router       Router?      @relation(fields: [routerId], references: [id])
   routerId     Int?
 
