@@ -14,6 +14,13 @@ interface CustomerData {
     city: string
 }
 
+interface RouterData {
+    IPv4: string,
+	IPv6: string,
+	brand: string,
+	model: string,
+}
+
 class ApiService {
     public api: AxiosInstance;
 
@@ -36,7 +43,7 @@ class ApiService {
         return response;
     }
 
-    async getAllRouters(): Promise<[]> {
+    async getAllRouters(): Promise<RouterData[]> {
         const res = await this.api.get('/routers', {
             headers: {
                 'Content-Type': 'application/json'
@@ -53,4 +60,4 @@ class ApiService {
 }
 
 export const apiService = new ApiService();
-export type { CustomerData };
+export type { CustomerData, RouterData };
