@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import api from "./axios";
 
 interface CustomerData {
+    id: number,
     name: string,
     type: string,
     cpf: string,
@@ -36,7 +37,7 @@ class ApiService {
         });
 
         if (res.status != 200) {
-            throw new Error("An errror was returned");
+            throw new Error("An error was returned");
         }
 
         const response = res.data;
@@ -51,7 +52,7 @@ class ApiService {
         });
 
         if (res.status != 200) {
-            throw new Error("An errror was returned");
+            throw new Error("An error was returned");
         }
 
         const response = res.data;
@@ -66,26 +67,38 @@ class ApiService {
         });
 
         if (res.status != 200) {
-            throw new Error("An errror was returned");
+            throw new Error("An error was returned");
         }
 
         const response = res.data;
         return response;
     }
 
-    async updateCustomer(data: CustomerData) {
-        const res = await this.api.put('/customer', data, {
+    async updateCustomer(id: number, data: CustomerData) {
+        const res = await this.api.put(`/customer/${id}`, data, {
             headers: {
                 'Content-Type': 'application/json'
             },
         });
 
         if (res.status != 200) {
-            throw new Error("An errror was returned");
+            throw new Error("An error was returned");
         }
 
         const response = res.data;
         return response;
+    }
+
+    async deleteCustomer(id: number) {
+        const res = await this.api.delete(`/customer/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
     }
 
     async getCEP(cep: string) {
@@ -96,7 +109,7 @@ class ApiService {
         });
 
         if (res.status != 200) {
-            throw new Error("An errror was returned");
+            throw new Error("An error was returned");
         }
 
         const response = res.data;

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CustomerData, apiService } from "../../services/api";
 import { Option, Select } from "@material-tailwind/react";
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -16,37 +16,63 @@ import moment from 'moment';
 interface CustomerFormProps {
     showForm: boolean;
     setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
-    type: "EDIT" | "CREATE",
+    type: "UPDATE" | "CREATE",
     customer?: CustomerData
 }
 
 const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type, customer }) => {
-    const { register, setValue, handleSubmit, getValues } = useForm<CustomerData>()
-    const onSubmit: SubmitHandler<CustomerData> = (data) => createCustomer(data)
+    const { register, setValue, handleSubmit, getValues, reset } = useForm<CustomerData>()
     const [selectedDate, setSelectedDate] = useState<Date>(getValues('dateOfBirth'));
     const [customerType, setCustomerType] = useState<string>()
-
+    const onSubmit: SubmitHandler<CustomerData> = (data) => {
+        if (type == "CREATE") {
+            return createCustomer(data)
+        }
+        updateCustomer(data)
+    }
     const modalRef = useRef<HTMLDivElement>(null);
-
     const handleCloseModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-            setShowForm(false)
+            closeModal()
         }
     };
+
+    useEffect(() => {
+        if (customer) {
+            setValue("name", customer.name);
+            setValue("type", customer.type);
+            setValue("cpf", customer.cpf);
+            setValue("cnpj", customer.cnpj);
+            setValue("dateOfBirth", customer.dateOfBirth);
+            setValue("street", customer.street);
+            setValue("streetNumber", customer.streetNumber);
+            setValue("cep", customer.cep);
+            setValue("district", customer.district);
+            setValue("city", customer.city);
+            setCustomerType(customer.type);
+            setSelectedDate(customer.dateOfBirth)
+        }
+    }, [customer]);
+
+    useEffect(() => {
+        if (customer) console.log(customer)
+    }, [])
 
     async function createCustomer(data: CustomerData) {
         try {
             await apiService.createCustomer(data);
-            setShowForm(false)
+            closeModal()
         } catch (err) {
             console.error(err)
         }
     }
 
-    async function editCustomer(data: CustomerData) {
+    async function updateCustomer(data: CustomerData) {
+        if (!customer) return
+
         try {
-            await apiService.createCustomer(data);
-            setShowForm(false)
+            await apiService.updateCustomer(customer.id, data);
+            closeModal()
         } catch (err) {
             console.error(err)
         }
@@ -63,16 +89,22 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
         }
     }
 
+    function closeModal() {
+        reset();
+        setSelectedDate(getValues('dateOfBirth'))
+        setShowForm(false)
+    }
+
     return (
         <>
             {showForm ?
-                <div onClick={handleCloseModal} className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 overflow-y-auto">
+                <div onClick={handleCloseModal} className="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 overflow-y-auto">
                     <div ref={modalRef} className="relative mx-auto flex w-full max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md" >
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="flex flex-col gap-2 p-6 pb-2">
                                 <h4
                                     className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                                    Create Customer
+                                    {type == 'CREATE' ? 'Create Customer' : 'Update Customer'}
                                 </h4>
                                 <div className="relative h-11 w-full min-w-[200px]">
                                     <div className="relative h-10 w-full min-w-[200px]">
@@ -86,8 +118,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                     </div>
                                 </div>
                                 <div className="relative h-11 w-full">
-                                    <Popover >
-                                        <PopoverTrigger asChild className="border-blue-gray-200" >
+                                    <Popover>
+                                        <PopoverTrigger asChild className="border-blue-gray-200">
                                             <Button
                                                 variant={"outline"}
                                                 className={cn(
@@ -99,7 +131,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                                 {selectedDate ? moment(selectedDate).format("DD/MM/YYYY") : 'Date of birth'}
                                             </Button>
                                         </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0 z-[9999]" >
+                                        <PopoverContent className="w-auto p-0 z-[9999]" ref={modalRef}>
                                             <Calendar
                                                 mode="single"
                                                 selected={selectedDate}
@@ -114,7 +146,18 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                     </Popover>
                                 </div>
                                 <div className="relative h-11 w-full min-w-[200px]">
-                                    <Select onChange={(val) => { if (!val) return; setValue('type', val); setCustomerType(val) }} label="Customer type" defaultValue="PERSON" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} placeholder={undefined} >
+                                    <Select value={getValues('type')} onChange={
+                                        (val) => {
+                                            if (!val) return;
+                                            setValue('type', val);
+                                            setCustomerType(val);
+                                            if (val == "PERSON") {
+                                                return setValue('cnpj', '')
+                                            }
+                                            setValue('cpf', '')
+                                        }}
+                                        label="Customer type"
+                                        onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} placeholder={undefined} >
                                         <Option value="PERSON">Person</Option>
                                         <Option value="COMPANY">Company</Option>
                                     </Select>
@@ -132,7 +175,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                         </div>
                                     </div>
                                 )}
-
                                 {customerType === 'COMPANY' && (
                                     <div className="relative h-11 w-full min-w-[200px]">
                                         <div className="relative h-10 w-full min-w-[200px]">
@@ -146,7 +188,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                         </div>
                                     </div>
                                 )}
-
                                 <div className="relative h-11 w-full min-w-[200px]">
                                     <div className="relative h-10 w-full min-w-[200px]">
                                         <input placeholder=" " {...register('cep')} onBlur={() => getCEP()}
