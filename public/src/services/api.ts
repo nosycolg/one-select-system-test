@@ -4,21 +4,21 @@ import api from "./axios";
 interface CustomerData {
     name: string,
     type: string,
-    cpf: number,
-    cnpj: number,
-    dateOfBirth: string,
+    cpf: string,
+    cnpj: string,
+    dateOfBirth: Date,
     street: string,
-    streetNumber: number,
-    cep: number,
+    streetNumber: string,
+    cep: string,
     district: string,
     city: string
 }
 
 interface RouterData {
     IPv4: string,
-	IPv6: string,
-	brand: string,
-	model: string,
+    IPv6: string,
+    brand: string,
+    model: string,
 }
 
 class ApiService {
@@ -45,6 +45,51 @@ class ApiService {
 
     async getAllRouters(): Promise<RouterData[]> {
         const res = await this.api.get('/routers', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.status != 200) {
+            throw new Error("An errror was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async createCustomer(data: CustomerData) {
+        const res = await this.api.post('/customer', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An errror was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async updateCustomer(data: CustomerData) {
+        const res = await this.api.put('/customer', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An errror was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async getCEP(cep: string) {
+        const res = await this.api.get(`https://viacep.com.br/ws/${cep}/json/`, {
             headers: {
                 'Content-Type': 'application/json'
             }
