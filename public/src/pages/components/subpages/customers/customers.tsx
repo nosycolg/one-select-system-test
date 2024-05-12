@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { RouterData, apiService } from "../../../../../services/api";
+import { CustomerData, apiService } from "../../../../services/api";
 import { MdEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
+import CustomerForm from "../../../../components/ui/customerForm";
 import { FaSearch } from "react-icons/fa";
-import RouterForm from "../../../../../components/ui/routerForm";
-import ModalConfirmation from "../../../../../components/ui/customerDelete";
-import RouterDelete from "../../../../../components/ui/routerDelete";
+import ModalConfirmation from "../../../../components/ui/customerDelete";
 
-export default function Routers() {
-    const [routers, setRouters] = useState<RouterData[]>()
+export default function Customers() {
+    const [customers, setCustomers] = useState<CustomerData[]>()
     const [showForm, setShowForm] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [typeForm, setTypeForm] = useState<"CREATE" | "UPDATE">("CREATE")
-    const [router, setRouter] = useState<RouterData>()
+    const [customer, setCustomer] = useState<CustomerData>()
 
     useEffect(() => {
-        getAllRouters()
+        getAllCustomers()
     }, [])
 
-    async function getAllRouters() {
+    async function getAllCustomers() {
         try {
-            const data = await apiService.getAllRouters()
-            setRouters(data);
+            const customers = await apiService.getAllCustomers()
+            setCustomers(customers);
         } catch (err) {
             console.error(err)
         }
@@ -34,7 +33,7 @@ export default function Routers() {
                     <button
                         className="select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button" data-dialog-target="sign-in-dialog" onClick={() => { setShowForm(true); setTypeForm("CREATE") }}>
-                        CREATE ROUTER
+                        CREATE CUSTOMER
                     </button>
                     <div className="relative flex w-full max-w-[24rem]">
                         <div className="relative h-10 w-full min-w-[200px]">
@@ -54,30 +53,32 @@ export default function Routers() {
                     </div>
                 </div>
                 <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {routers?.map((data) => {
+                    {customers?.map((data) => {
                         return (
                             <li key={data.id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
                                 <div className="flex w-full items-center justify-between space-x-6 p-6">
                                     <div className="flex-1 truncate">
                                         <div className="flex items-center space-x-3">
-                                            <h3 className="truncate text-sm font-medium text-gray-900">{data.IPv4}</h3>
+                                            <h3 className="truncate text-sm font-medium text-gray-900">{data.name}</h3>
                                         </div>
-                                        <p className="mt-1 truncate text-sm text-gray-500">{data.brand} - {data.model}</p>
+                                        <p className="mt-1 truncate text-sm text-gray-500">{data.type} - {data.cpf}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <div className="-mt-px flex divide-x divide-gray-200">
                                         <div className="flex w-0 flex-1">
-                                            <a onClick={() => { setShowForm(true); setTypeForm("UPDATE"); setRouter(data) }} className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-100 cursor-pointer">
+                                            <button
+                                                onClick={() => { setShowForm(true); setTypeForm("UPDATE"); setCustomer(data) }}
+                                                className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-100 cursor-pointer">
                                                 <MdEdit />
                                                 Edit
-                                            </a>
+                                            </button>
                                         </div>
                                         <div className="-ml-px flex w-0 flex-1">
-                                            <a onClick={() => { setShowModal(true); setRouter(data) }} className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-white bg-red-600 hover:bg-red-800">
+                                            <button onClick={() => { setShowModal(true); setCustomer(data) }} className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-white bg-red-600 hover:bg-red-800">
                                                 <IoMdTrash />
                                                 Delete
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -86,8 +87,8 @@ export default function Routers() {
                     })}
                 </ul>
             </div>
-            <RouterForm showForm={showForm} type={typeForm} setShowForm={setShowForm} router={router} />
-            <RouterDelete showModal={showModal} setShowModal={setShowModal} router={router} />
+            <CustomerForm showForm={showForm} type={typeForm} setShowForm={setShowForm} customer={customer} />
+            <ModalConfirmation showModal={showModal} setShowModal={setShowModal} customer={customer} />
         </>
     )
 }

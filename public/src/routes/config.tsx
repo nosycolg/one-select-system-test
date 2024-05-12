@@ -2,10 +2,10 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import Loader from "../components/ui/loader";
-import Initial from "../pages/home/components/subpages/initial";
+import Initial from "../pages/components/subpages/initial";
 import routes from "./index";
 import React from "react";
-const Home = lazy(() => import('../pages/home/index'));
+const Home = lazy(() => import('../pages/index'));
 
 
 export default function Router() {

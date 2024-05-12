@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { SidebarItems } from '../constants';
 import React from 'react';
-import { Label } from '../../../../components/ui/label';
+import { Label } from '../../../components/ui/label';
 
 export interface MenuItemAttributes {
     item: SidebarItems;
