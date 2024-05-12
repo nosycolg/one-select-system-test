@@ -10,9 +10,6 @@ export default function Sidebar(props: SidebarProps) {
     return (
         <div className={props.className}>
             <div className='flex flex-col items-center w-[100vw]'>
-                {/* <div className='flex self-start py-6  w-[100%] items-center justify-center text-center'>
-                    <img className='w-[80%]' src={'logo'} />
-                </div> */}
                 <ScrollArea className='flex flex-col w-full gap-3 mt-3'>
                     <AnimatePresence>
                         {SIDEBAR_ITEMS.map((item, index) => {

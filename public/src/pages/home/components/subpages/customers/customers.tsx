@@ -4,7 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 import CustomerForm from "../../../../../components/ui/customerForm";
 import { FaSearch } from "react-icons/fa";
-import ModalConfirmation from "../../../../../components/ui/modalConfirmation";
+import ModalConfirmation from "../../../../../components/ui/customerDelete";
 
 export default function Customers() {
     const [customers, setCustomers] = useState<CustomerData[]>()
@@ -69,7 +69,7 @@ export default function Customers() {
                                         <div className="flex w-0 flex-1">
                                             <button
                                                 onClick={() => { setShowForm(true); setTypeForm("UPDATE"); setCustomer(data) }}
-                                                className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-100" data-dialog-target="sign-in-dialog">
+                                                className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-100 cursor-pointer">
                                                 <MdEdit />
                                                 Edit
                                             </button>

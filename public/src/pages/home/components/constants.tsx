@@ -2,6 +2,7 @@ import { FaHome } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { BsFillRouterFill } from "react-icons/bs";
 import React, { ReactElement } from "react";
+import { IoMdListBox } from "react-icons/io";
 
 export interface SubMenuProps {
     title: string;
@@ -39,6 +40,12 @@ export const SIDEBAR_ITEMS: SidebarItems[] = [
         title: 'Routers',
         path: '/routers',
         icon: <BsFillRouterFill size={20} />,
+        submenu: true,
+    },
+    {
+        title: 'Logs',
+        path: '/logs',
+        icon: <IoMdListBox size={20} />,
         submenu: true,
     },
 ];

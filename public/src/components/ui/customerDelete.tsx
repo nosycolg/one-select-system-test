@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { CustomerData, apiService } from "../../services/api";
 
-interface ModalConfirmationProps {
+interface CustomerDeleteProps {
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     customer?: CustomerData;
 }
 
-const ModalConfirmation: React.FC<ModalConfirmationProps> = ({ showModal, setShowModal, customer }) => {
+const CustomerDelete: React.FC<CustomerDeleteProps> = ({ showModal, setShowModal, customer }) => {
     const modalRef = useRef<HTMLDivElement>(null);
     const handleCloseModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
@@ -52,4 +52,4 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({ showModal, setSho
     );
 };
 
-export default ModalConfirmation;
+export default CustomerDelete;

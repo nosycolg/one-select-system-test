@@ -16,6 +16,7 @@ interface CustomerData {
 }
 
 interface RouterData {
+    id: number,
     IPv4: string,
     IPv6: string,
     brand: string,
@@ -57,6 +58,48 @@ class ApiService {
 
         const response = res.data;
         return response;
+    }
+
+    async createRouter(data: RouterData) {
+        const res = await this.api.post('/router', data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async updateRouter(id: number, data: RouterData) {
+        const res = await this.api.put(`/router/${id}`, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async deleteRouter(id: number) {
+        const res = await this.api.delete(`/router/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
     }
 
     async createCustomer(data: CustomerData) {

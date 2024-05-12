@@ -54,10 +54,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
         }
     }, [customer]);
 
-    useEffect(() => {
-        if (customer) console.log(customer)
-    }, [])
-
     async function createCustomer(data: CustomerData) {
         try {
             await apiService.createCustomer(data);
