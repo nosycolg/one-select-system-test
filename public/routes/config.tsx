@@ -2,11 +2,10 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import Loader from "../components/ui/loader";
-import Initial from "../pages/components/subpages/initial";
+import Customers from "../pages/components/subpages/customers/customers";
 import routes from "./index";
 import React from "react";
 const Home = lazy(() => import('../pages/index'));
-
 
 export default function Router() {
     const [loading, setLoading] = useState(true);
@@ -22,11 +21,10 @@ export default function Router() {
             <Routes>
                 <Route path="/">
                     <Route path="/" element={<Home />}>
-                        <Route index element={<Initial />} />
-                        {routes.map(({ path, component: Component, id }) => (
+                        <Route index element={<Customers />} />
+                        {routes.map(({ path, component: Component }) => (
                             <Route
                                 path={path}
-                                key={id}
                                 element={
                                     <Suspense fallback={<Loader />}>
                                         <Component />
@@ -35,6 +33,7 @@ export default function Router() {
                             />
                         ))}
                     </Route>
+                    <Route path="*" element={<Home />} />
                 </Route>
             </Routes>
         </Suspense>

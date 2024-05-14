@@ -37,7 +37,6 @@ export default function Sidebar(props: SidebarProps) {
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
                                             className='flex flex-col w-full gap-3'>
-                                            {/* <Separator /> */}
                                             <MenuItem key={index} item={item} />
                                         </motion.div>
                                     }

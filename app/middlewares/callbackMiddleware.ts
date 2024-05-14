@@ -11,18 +11,18 @@ declare global {
 }
 
 export default (request: Request, response: Response, next: NextFunction) => {
-    response.badRequest = (errorCode?: string) => {
-        return response.status(400).send(errorCode || '')
+    response.badRequest = (errorCode?: string, message?: string) => {
+        return response.status(400).json({ error: { code: errorCode, message: message } })
     }
 
-    response.notFound = (errorCode?: string) => {
-        return response.status(404).send(errorCode || '')
+    response.notFound = (errorCode?: string, message?: string) => {
+        return response.status(404).json({ error: { code: errorCode, message: message } })
     }
 
     response.success = (data?: unknown) => {
         response.status(200)
 
-        if (data) return response.send(data)
+        if (data) return response.json(data)
 
         return response.end()
     }

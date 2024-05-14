@@ -7,7 +7,7 @@ module.exports = withMT({
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
-    './public/src/**/*.{ts,tsx}',
+    './public/**/*.{ts,tsx}',
   ],
   prefix: "",
   theme: {

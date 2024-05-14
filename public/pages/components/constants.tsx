@@ -26,11 +26,6 @@ export interface SidebarItems {
 
 export const SIDEBAR_ITEMS: SidebarItems[] = [
     {
-        title: 'Home',
-        path: '/',
-        icon: <FaHome size={20} />
-    },
-    {
         title: 'Customers',
         path: '/customers',
         icon: <FaPerson size={20} />,

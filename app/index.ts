@@ -2,7 +2,7 @@ require('dotenv').config();
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { init } from './routes/routes';
+import init from './routes/routes';
 import callbackMiddleware from './middlewares/callbackMiddleware';
 
 const app = express();
@@ -32,4 +32,4 @@ async function start() {
 }
 
 start();
-module.exports = app;
+export default app;

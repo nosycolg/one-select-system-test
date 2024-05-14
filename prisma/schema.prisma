@@ -13,7 +13,9 @@ model Router {
   IPv6      String
   brand     String
   model     String
-  status    Status?    @default(ACTIVE) // or boolean
+  activated Boolean?   @default(true)
+  created   DateTime   @default(now())
+  updated   DateTime   @updatedAt
   customers Customer[]
 
   @@map("routers")
@@ -31,7 +33,9 @@ model Customer {
   cep          String
   district     String
   city         String
-  status       Status?      @default(ACTIVE) // or boolean
+  activated    Boolean?     @default(true)
+  created      DateTime     @default(now())
+  updated      DateTime     @updatedAt
   Router       Router?      @relation(fields: [routerId], references: [id])
   routerId     Int?
 
@@ -41,9 +45,4 @@ model Customer {
 enum CustomerType {
   PERSON
   COMPANY
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
 }

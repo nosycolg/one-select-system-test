@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { RequestService } from '../services/requestService';
+import { RequestService } from '../services/request.service';
+import { actions, logActivity } from '../services/logs.service';
 const prisma = new PrismaClient();
 
 class RouterController {
@@ -9,6 +10,7 @@ class RouterController {
             const router = await prisma.router.findMany({ include: { customers: { select: { id: true, name: true } } } })
             return res.success(router)
         } catch (err) {
+            // istanbul ignore next
             return res.badRequest(err)
         }
     }
@@ -38,6 +40,14 @@ class RouterController {
                 data: req.body,
             });
 
+            await logActivity(actions.ROUTER_CREATED, {
+                RouterId: data.id,
+                RouterData: {
+                    Brand: data.brand,
+                    Model: data.model
+                }
+            });
+
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
@@ -64,6 +74,12 @@ class RouterController {
                 data: req.body,
             });
 
+            await logActivity(actions.ROUTER_UPDATED, {
+                RouterId: data.id,
+                OldData: router,
+                NewData: data
+            });
+
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
@@ -81,6 +97,14 @@ class RouterController {
 
             const data = await prisma.router.delete({ where: { id: Number(req.params.id) } });
 
+            await logActivity(actions.ROUTER_DELETED, {
+                RouterId: data.id,
+                RouterData: {
+                    Brand: data.brand,
+                    Model: data.model
+                }
+            });
+
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
@@ -89,7 +113,7 @@ class RouterController {
     }
 
     async updateRouterCustomers(req: Request, res: Response) {
-        const { customersToAdd = [], customersToRemove = [] } = req.body;
+        const { customersToAdd, customersToRemove } = req.body;
 
         try {
             const router = await prisma.router.findUnique({
@@ -114,7 +138,7 @@ class RouterController {
                 },
             });
 
-            await prisma.router.update({
+            const customer = await prisma.router.update({
                 where: { id: Number(req.params.id) },
                 data: {
                     customers: {
@@ -123,13 +147,32 @@ class RouterController {
                 },
             });
 
-            return res.success({ message: 'Clientes atualizados com sucesso para o roteador.' });
+            return res.success(customer);
         } catch (err) {
-            console.error(err)
+            // istanbul ignore next
             return res.badRequest(err);
         }
     }
 
+    async changeRouterStatus(req: Request, res: Response) {
+        try {
+            const router = await prisma.router.findUnique({ where: { id: Number(req.params.id) } });
+
+            if (!router) {
+                return res.notFound()
+            }
+
+            const data = await prisma.router.update({
+                where: { id: Number(req.params.id) },
+                data: { activated: !router.activated },
+            });
+
+            return res.success(data);
+        } catch (err) {
+            // istanbul ignore next
+            return res.badRequest(err)
+        }
+    }
 }
 
 export default new RouterController();

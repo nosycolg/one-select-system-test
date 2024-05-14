@@ -21,6 +21,12 @@ interface RouterData {
     IPv6: string,
     brand: string,
     model: string,
+    customers?: CustomerData[]
+}
+
+interface CustomerManagementData {
+    customersToAdd: number[],
+    customersToRemove: number[]
 }
 
 class ApiService {
@@ -32,6 +38,21 @@ class ApiService {
 
     async getAllCustomers(): Promise<CustomerData[]> {
         const res = await this.api.get('/customers', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async getCustomersToAdd(): Promise<CustomerData[]> {
+        const res = await this.api.get('/customers/to/add', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -77,6 +98,21 @@ class ApiService {
 
     async updateRouter(id: number, data: RouterData) {
         const res = await this.api.put(`/router/${id}`, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
+
+    async customerAssociation(id: number, data: CustomerManagementData) {
+        const res = await this.api.put(`/router/${id}/customers`, data, {
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -158,7 +194,22 @@ class ApiService {
         const response = res.data;
         return response;
     }
+
+    async getAllLogs(action: string) {
+        const res = await this.api.get(`/logs?action=${action}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.status != 200) {
+            throw new Error("An error was returned");
+        }
+
+        const response = res.data;
+        return response;
+    }
 }
 
 export const apiService = new ApiService();
-export type { CustomerData, RouterData };
+export type { CustomerData, RouterData, CustomerManagementData };
