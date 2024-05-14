@@ -11,6 +11,7 @@ import { useCreateRouter, useChangeRouterStatus, useDeleteRouter, useUpdateRoute
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Drawer } from '@material-tailwind/react';
 import Sidebar from '../../sidebar';
+import { toast } from 'react-toastify';
 
 export default function Routers() {
     const { t } = useTranslation();
@@ -34,7 +35,11 @@ export default function Routers() {
         create_router(data, {
             onSuccess: () => {
                 setShowForm(false);
+                toast.success(t('GENERIC_ROUTER_CREATED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_ROUTER_CREATE_FAILED'));
             },
         });
     }
@@ -48,7 +53,11 @@ export default function Routers() {
             {
                 onSuccess: () => {
                     setShowForm(false);
+                    toast.success(t('GENERIC_ROUTER_UPDATED_SUCCESSFULLY'));
                     refetch();
+                },
+                onError: () => {
+                    toast.error(t('GENERIC_ROUTER_UPDATE_FAILED'));
                 },
             }
         );
@@ -62,7 +71,11 @@ export default function Routers() {
         customer_association({ routerId: router.id, data }, {
             onSuccess: () => {
                 setShowCustomersModal(false);
+                toast.success(t('GENERIC_CUSTOMERS_ADDED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_CUSTOMERS_ADD_FAILED'));
             },
         });
     }
@@ -70,7 +83,11 @@ export default function Routers() {
     function changeRouterStatus(routerId: number) {
         change_router_status(routerId, {
             onSuccess: () => {
+                toast.success(t('GENERIC_ROUTER_STATUS_CHANGED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_ROUTER_STATUS_CHANGE_FAILED'));
             },
         });
     }
@@ -82,10 +99,15 @@ export default function Routers() {
         delete_router(router.id, {
             onSuccess: () => {
                 setShowDeleteModal(false);
+                toast.success(t('GENERIC_ROUTER_DELETED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_ROUTER_DELETE_FAILED'));
             },
         });
     }
+
 
     return (
         <>

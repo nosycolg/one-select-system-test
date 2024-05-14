@@ -10,6 +10,7 @@ import { TFunction } from 'i18next';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Sidebar from '../../sidebar';
 import { Drawer } from '@material-tailwind/react';
+import { toast } from 'react-toastify';
 
 export default function Customers() {
     const { t }: { t: TFunction } = useTranslation();
@@ -31,7 +32,11 @@ export default function Customers() {
         create_customer(data, {
             onSuccess: () => {
                 setShowForm(false);
+                toast.success(t('GENERIC_CUSTOMER_CREATED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_CUSTOMER_CREATE_FAILED'));
             },
         });
     }
@@ -45,7 +50,11 @@ export default function Customers() {
             {
                 onSuccess: () => {
                     setShowForm(false);
+                    toast.success(t('GENERIC_CUSTOMER_UPDATED_SUCCESSFULLY'));
                     refetch();
+                },
+                onError: () => {
+                    toast.error(t('GENERIC_CUSTOMER_UPDATE_FAILED'));
                 },
             }
         );
@@ -54,7 +63,11 @@ export default function Customers() {
     function changeCustomerStatus(customerId: number) {
         change_customer_status(customerId, {
             onSuccess: () => {
+                toast.success(t('GENERIC_CUSTOMER_STATUS_CHANGED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_CUSTOMER_STATUS_CHANGE_FAILED'));
             },
         });
     }
@@ -66,7 +79,11 @@ export default function Customers() {
         delete_customer(customer.id, {
             onSuccess: () => {
                 setShowModal(false);
+                toast.error(t('GENERIC_CUSTOMER_DELETED_SUCCESSFULLY'));
                 refetch();
+            },
+            onError: () => {
+                toast.error(t('GENERIC_CUSTOMER_DELETE_FAILED'));
             },
         });
     }
@@ -115,7 +132,7 @@ export default function Customers() {
                                                 )}
                                             </div>
                                             <p className='mt-1 truncate text-sm text-gray-500'>
-                                                {t('GENERIC_' + data.type)} - {data.cpf}
+                                                {t('GENERIC_' + data.type)} - {data.cpf || data.cnpj}
                                             </p>
                                         </div>
                                     </div>

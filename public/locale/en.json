@@ -48,6 +48,25 @@
         "GENERIC_MODEL": "Model",
         "GENERIC_CUSTOMERS_TO_REMOVE": "Customers to remove",
         "GENERIC_CUSTOMERS_TO_ADD": "Customers to add",
-        "GENERIC_CONFIRM": "Confirm"
+        "GENERIC_CONFIRM": "Confirm",
+        "GENERIC_CUSTOMER_CREATED_SUCCESSFULLY": "Customer created successfully.",
+        "GENERIC_CUSTOMER_CREATE_FAILED": "Failed to create customer.",
+        "GENERIC_CUSTOMER_UPDATED_SUCCESSFULLY": "Customer updated successfully.",
+        "GENERIC_CUSTOMER_UPDATE_FAILED": "Failed to update customer.",
+        "GENERIC_CUSTOMER_STATUS_CHANGED_SUCCESSFULLY": "Customer status changed successfully.",
+        "GENERIC_CUSTOMER_STATUS_CHANGE_FAILED": "Failed to change customer status.",
+        "GENERIC_CUSTOMER_DELETE_FAILED": "Failed to delete customer.",
+        "GENERIC_CUSTOMER_DELETED_SUCCESSFULLY": "Customer deleted successfully",
+        "GENERIC_ROUTER_CREATED_SUCCESSFULLY": "Router created successfully.",
+        "GENERIC_ROUTER_CREATE_FAILED": "Failed to create router.",
+        "GENERIC_ROUTER_UPDATED_SUCCESSFULLY": "Router updated successfully.",
+        "GENERIC_ROUTER_UPDATE_FAILED": "Failed to update router.",
+        "GENERIC_CUSTOMERS_ADDED_SUCCESSFULLY": "Customers added successfully.",
+        "GENERIC_CUSTOMERS_ADD_FAILED": "Failed to add customers.",
+        "GENERIC_ROUTER_STATUS_CHANGED_SUCCESSFULLY": "Router status changed successfully.",
+        "GENERIC_ROUTER_STATUS_CHANGE_FAILED": "Failed to change router status.",
+        "GENERIC_ROUTER_DELETED_SUCCESSFULLY": "Router deleted successfully.",
+        "GENERIC_ROUTER_DELETE_FAILED": "Failed to delete router.",
+        "GENERIC_CEP_LOADED": "CEP loaded successfully."
     }
 }

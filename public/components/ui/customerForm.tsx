@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 interface CustomerFormProps {
     showForm: boolean;
@@ -57,6 +58,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
     async function getCEP() {
         try {
             const { logradouro, bairro, localidade } = await apiService.getCEP(getValues('cep'));
+            toast.success(t('GENERIC_CEP_LOADED'));
             setValue('street', logradouro);
             setValue('district', bairro);
             setValue('city', localidade);

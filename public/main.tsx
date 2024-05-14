@@ -10,12 +10,16 @@ import './lib/i18n';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './services/queryClient';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <ThemeProvider>
                     <App />
+                    <ToastContainer />
                 </ThemeProvider>
             </BrowserRouter>
         </QueryClientProvider>

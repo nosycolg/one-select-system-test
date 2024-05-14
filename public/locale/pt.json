@@ -48,6 +48,25 @@
         "GENERIC_MODEL": "Modelo",
         "GENERIC_CUSTOMERS_TO_REMOVE": "Clientes para remover",
         "GENERIC_CUSTOMERS_TO_ADD": "Clientes para adicionar",
-        "GENERIC_CONFIRM": "Confirmar"
+        "GENERIC_CONFIRM": "Confirmar",
+        "GENERIC_CUSTOMER_CREATED_SUCCESSFULLY": "Cliente criado com sucesso.",
+        "GENERIC_CUSTOMER_CREATE_FAILED": "Falha ao criar cliente.",
+        "GENERIC_CUSTOMER_UPDATED_SUCCESSFULLY": "Cliente atualizado com sucesso.",
+        "GENERIC_CUSTOMER_UPDATE_FAILED": "Falha ao atualizar cliente.",
+        "GENERIC_CUSTOMER_STATUS_CHANGED_SUCCESSFULLY": "Status do cliente alterado com sucesso.",
+        "GENERIC_CUSTOMER_STATUS_CHANGE_FAILED": "Falha ao alterar status do cliente.",
+        "GENERIC_CUSTOMER_DELETE_FAILED": "Falha ao deletar cliente.",
+        "GENERIC_CUSTOMER_DELETED_SUCCESSFULLY": "Cliente deletado com sucesso",
+        "GENERIC_ROUTER_CREATED_SUCCESSFULLY": "Roteador criado com sucesso.",
+        "GENERIC_ROUTER_CREATE_FAILED": "Falha ao criar roteador.",
+        "GENERIC_ROUTER_UPDATED_SUCCESSFULLY": "Roteador atualizado com sucesso.",
+        "GENERIC_ROUTER_UPDATE_FAILED": "Falha ao atualizar roteador.",
+        "GENERIC_CUSTOMERS_ADDED_SUCCESSFULLY": "Clientes adicionados com sucesso.",
+        "GENERIC_CUSTOMERS_ADD_FAILED": "Falha ao adicionar clientes.",
+        "GENERIC_ROUTER_STATUS_CHANGED_SUCCESSFULLY": "Status do roteador alterado com sucesso.",
+        "GENERIC_ROUTER_STATUS_CHANGE_FAILED": "Falha ao alterar status do roteador.",
+        "GENERIC_ROUTER_DELETED_SUCCESSFULLY": "Roteador deletado com sucesso.",
+        "GENERIC_ROUTER_DELETE_FAILED": "Falha ao deletar roteador.",
+        "GENERIC_CEP_LOADED": "CEP carregado com sucesso."
     }
 }
