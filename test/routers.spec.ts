@@ -4,12 +4,12 @@ import app from '../app/index';
 import { $Enums, PrismaClient } from '@prisma/client';
 
 interface RouterData {
-    id: number,
-    IPv4: string,
-    IPv6: string,
-    brand: string,
-    model: string,
-    customers?: CustomerData[]
+    id: number;
+    IPv4: string;
+    IPv6: string;
+    brand: string;
+    model: string;
+    customers?: CustomerData[];
 }
 
 interface CustomerData {
@@ -41,39 +41,39 @@ describe('routers api test', () => {
         await prisma.router.deleteMany();
         junior_customer = await prisma.customer.create({
             data: {
-                name: "junior customer",
-                type: "PERSON",
-                cpf: "942.998.104-66",
-                dateOfBirth: new Date,
-                street: "rua niederauer",
-                streetNumber: "1010",
-                cep: "54767-160",
-                district: "bom fim",
-                city: "santa maria"
-            }
+                name: 'junior customer',
+                type: 'PERSON',
+                cpf: '942.998.104-66',
+                dateOfBirth: new Date(),
+                street: 'rua niederauer',
+                streetNumber: '1010',
+                cep: '54767-160',
+                district: 'bom fim',
+                city: 'santa maria',
+            },
         });
         pleno_customer = await prisma.customer.create({
             data: {
-                name: "pleno customer",
-                type: "PERSON",
-                cpf: "222.998.104-66",
-                dateOfBirth: new Date,
-                street: "rua niederauer",
-                streetNumber: "1010",
-                cep: "54767-160",
-                district: "bom fim",
-                city: "santa maria"
-            }
+                name: 'pleno customer',
+                type: 'PERSON',
+                cpf: '222.998.104-66',
+                dateOfBirth: new Date(),
+                street: 'rua niederauer',
+                streetNumber: '1010',
+                cep: '54767-160',
+                district: 'bom fim',
+                city: 'santa maria',
+            },
         });
         junior_router = await prisma.router.create({
             data: {
-                IPv4: "192.108.0.8",
-                IPv6: "2001:0000:130F:0000:0000:09C0:876A:130B",
-                brand: "LG",
-                model: "XM365"
-            }
+                IPv4: '192.108.0.8',
+                IPv6: '2001:0000:130F:0000:0000:09C0:876A:130B',
+                brand: 'LG',
+                model: 'XM365',
+            },
         });
-    })
+    });
 
     afterAll(async () => {
         await prisma.customer.deleteMany();
@@ -92,10 +92,10 @@ describe('routers api test', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({
-            IPv4: "192.108.0.8",
-            IPv6: "2001:0000:130F:0000:0000:09C0:876A:130B",
-            brand: "LG",
-            model: "XM365"
+            IPv4: '192.108.0.8',
+            IPv6: '2001:0000:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG',
+            model: 'XM365',
         });
     });
 
@@ -107,10 +107,10 @@ describe('routers api test', () => {
 
     test('create and update router', async () => {
         const created_router = await agent.post(`/router`).send({
-            IPv4: "192.108.0.8",
-            IPv6: "2001:0000:130F:0000:0000:09C0:876A:130B",
-            brand: "LG",
-            model: "XM365"
+            IPv4: '192.108.0.8',
+            IPv6: '2001:0000:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG',
+            model: 'XM365',
         });
         expect(created_router.status).toBe(200);
 
@@ -123,17 +123,17 @@ describe('routers api test', () => {
 
         expect(get_created_router.status).toBe(200);
         expect(get_created_router.body).toMatchObject({
-            IPv4: "192.108.0.8",
-            IPv6: "2001:0000:130F:0000:0000:09C0:876A:130B",
-            brand: "LG",
-            model: "XM365"
+            IPv4: '192.108.0.8',
+            IPv6: '2001:0000:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG',
+            model: 'XM365',
         });
 
         const updated_router = await agent.put(`/router/${created_router.body.id}`).send({
-            IPv4: "192.108.0.3",
-            IPv6: "2001:0002:130F:0000:0000:09C0:876A:130B",
-            brand: "LG2",
-            model: "XM3654"
+            IPv4: '192.108.0.3',
+            IPv6: '2001:0002:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG2',
+            model: 'XM3654',
         });
         expect(updated_router.status).toBe(200);
 
@@ -146,10 +146,10 @@ describe('routers api test', () => {
 
         expect(get_updated_router.status).toBe(200);
         expect(get_updated_router.body).toMatchObject({
-            IPv4: "192.108.0.3",
-            IPv6: "2001:0002:130F:0000:0000:09C0:876A:130B",
-            brand: "LG2",
-            model: "XM3654"
+            IPv4: '192.108.0.3',
+            IPv6: '2001:0002:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG2',
+            model: 'XM3654',
         });
     });
 
@@ -160,10 +160,10 @@ describe('routers api test', () => {
 
     test('update non-existent router', async () => {
         const res = await agent.put(`/router/-1`).send({
-            IPv4: "192.108.0.3",
-            IPv6: "2001:0002:130F:0000:0000:09C0:876A:130B",
-            brand: "LG2",
-            model: "XM3654"
+            IPv4: '192.108.0.3',
+            IPv6: '2001:0002:130F:0000:0000:09C0:876A:130B',
+            brand: 'LG2',
+            model: 'XM3654',
         });
         expect(res.status).toBe(404);
     });
@@ -181,19 +181,19 @@ describe('routers api test', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({
-            activated: false
+            activated: false,
         });
     });
 
     test('change non-existent router status', async () => {
-        let res = await agent.post(`/router/-1/status`);
+        const res = await agent.post(`/router/-1/status`);
         expect(res.status).toBe(404);
     });
 
     test('update router customers', async () => {
         let res = await agent.put(`/router/${junior_router.id}/customers`).send({
             customersToAdd: [junior_customer.id, pleno_customer.id],
-            customersToRemove: []
+            customersToRemove: [],
         });
         expect(res.status).toBe(200);
 
@@ -202,29 +202,27 @@ describe('routers api test', () => {
         expect(res.body).toMatchObject({
             customers: [
                 { id: junior_customer.id, name: 'junior customer' },
-                { id: pleno_customer.id, name: 'pleno customer' }
-            ]
+                { id: pleno_customer.id, name: 'pleno customer' },
+            ],
         });
 
         res = await agent.put(`/router/${junior_router.id}/customers`).send({
             customersToAdd: [junior_customer.id],
-            customersToRemove: [pleno_customer.id]
+            customersToRemove: [pleno_customer.id],
         });
         expect(res.status).toBe(200);
 
         res = await agent.get(`/router/${junior_router.id}`);
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({
-            customers: [
-                { id: junior_customer.id, name: 'junior customer' },
-            ]
+            customers: [{ id: junior_customer.id, name: 'junior customer' }],
         });
     });
 
     test('update router customers', async () => {
-        let res = await agent.put(`/router/-1/customers`).send({
+        const res = await agent.put(`/router/-1/customers`).send({
             customersToAdd: [junior_customer.id, pleno_customer.id],
-            customersToRemove: []
+            customersToRemove: [],
         });
         expect(res.status).toBe(404);
     });

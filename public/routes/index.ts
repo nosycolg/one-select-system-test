@@ -1,8 +1,8 @@
 import { lazy } from 'react';
-import Logs from '../pages/components/subpages/logs/logs';
 
 const Customers = lazy(() => import('../pages/components/subpages/customers/customers'));
 const Routers = lazy(() => import('../pages/components/subpages/routers/routers'));
+const Logs = lazy(() => import('../pages/components/subpages/logs/logs'));
 
 const coreRoutes = [
     {

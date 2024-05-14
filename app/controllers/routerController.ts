@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 class RouterController {
     async getAllRouters(req: Request, res: Response) {
         try {
-            const router = await prisma.router.findMany({ include: { customers: { select: { id: true, name: true } } } })
-            return res.success(router)
+            const router = await prisma.router.findMany({ include: { customers: { select: { id: true, name: true } } } });
+            return res.success(router);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -19,12 +19,12 @@ class RouterController {
         try {
             const router = await prisma.router.findUnique({ where: { id: Number(req.params.id) }, include: { customers: { select: { id: true, name: true } } } });
             if (!router) {
-                return res.notFound()
+                return res.notFound();
             }
             return res.success(router);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -44,14 +44,14 @@ class RouterController {
                 RouterId: data.id,
                 RouterData: {
                     Brand: data.brand,
-                    Model: data.model
-                }
+                    Model: data.model,
+                },
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -60,7 +60,7 @@ class RouterController {
             const router = await prisma.router.findUnique({ where: { id: Number(req.params.id) } });
 
             if (!router) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const { error } = RequestService.validateRouterData(req.body);
@@ -77,13 +77,13 @@ class RouterController {
             await logActivity(actions.ROUTER_UPDATED, {
                 RouterId: data.id,
                 OldData: router,
-                NewData: data
+                NewData: data,
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -92,7 +92,7 @@ class RouterController {
             const router = await prisma.router.findUnique({ where: { id: Number(req.params.id) } });
 
             if (!router) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const data = await prisma.router.delete({ where: { id: Number(req.params.id) } });
@@ -101,14 +101,14 @@ class RouterController {
                 RouterId: data.id,
                 RouterData: {
                     Brand: data.brand,
-                    Model: data.model
-                }
+                    Model: data.model,
+                },
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -125,9 +125,9 @@ class RouterController {
                 return res.notFound();
             }
 
-            const filteredCustomersToAdd = customersToAdd.filter((customerId: number) => !router.customers.some(customer => customer.id === customerId));
+            const filteredCustomersToAdd = customersToAdd.filter((customerId: number) => !router.customers.some((customer) => customer.id === customerId));
 
-            const filteredCustomersToRemove = customersToRemove.filter((customerId: number) => router.customers.some(customer => customer.id === customerId));
+            const filteredCustomersToRemove = customersToRemove.filter((customerId: number) => router.customers.some((customer) => customer.id === customerId));
 
             await prisma.router.update({
                 where: { id: Number(req.params.id) },
@@ -159,7 +159,7 @@ class RouterController {
             const router = await prisma.router.findUnique({ where: { id: Number(req.params.id) } });
 
             if (!router) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const data = await prisma.router.update({
@@ -170,7 +170,7 @@ class RouterController {
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 }

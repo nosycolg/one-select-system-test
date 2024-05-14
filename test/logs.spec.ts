@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeAll, afterAll } from '@jest/globals';
+import { describe, expect, test } from '@jest/globals';
 import supertest from 'supertest';
 import app from '../app/index';
 const agent = supertest.agent(app);
@@ -9,4 +9,4 @@ describe('logs api test', () => {
         expect(res.status).toBe(200);
         expect(Array.isArray(res.body)).toBe(true);
     });
-})
+});

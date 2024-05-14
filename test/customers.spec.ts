@@ -30,18 +30,18 @@ describe('customer api test', () => {
         await prisma.router.deleteMany();
         junior_customer = await prisma.customer.create({
             data: {
-                name: "junior customer",
-                type: "PERSON",
-                cpf: "942.998.104-66",
-                dateOfBirth: new Date,
-                street: "rua niederauer",
-                streetNumber: "1010",
-                cep: "54767-160",
-                district: "bom fim",
-                city: "santa maria"
-            }
+                name: 'junior customer',
+                type: 'PERSON',
+                cpf: '942.998.104-66',
+                dateOfBirth: new Date(),
+                street: 'rua niederauer',
+                streetNumber: '1010',
+                cep: '54767-160',
+                district: 'bom fim',
+                city: 'santa maria',
+            },
         });
-    })
+    });
 
     afterAll(async () => {
         await prisma.customer.deleteMany();
@@ -60,15 +60,15 @@ describe('customer api test', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({
-            name: "junior customer",
-            type: "PERSON",
-            cpf: "942.998.104-66",
+            name: 'junior customer',
+            type: 'PERSON',
+            cpf: '942.998.104-66',
             dateOfBirth: junior_customer.dateOfBirth.toISOString(),
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
     });
 
@@ -86,15 +86,15 @@ describe('customer api test', () => {
 
     test('create and update customer', async () => {
         const created_customer = await agent.post(`/customer`).send({
-            name: "pleno customer",
-            type: "PERSON",
-            cpf: "942.998.204-66",
+            name: 'pleno customer',
+            type: 'PERSON',
+            cpf: '942.998.204-66',
             dateOfBirth: new Date(),
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
         expect(created_customer.status).toBe(200);
 
@@ -107,27 +107,27 @@ describe('customer api test', () => {
 
         expect(get_created_customer.status).toBe(200);
         expect(get_created_customer.body).toMatchObject({
-            name: "pleno customer",
-            type: "PERSON",
-            cpf: "942.998.204-66",
+            name: 'pleno customer',
+            type: 'PERSON',
+            cpf: '942.998.204-66',
             dateOfBirth: created_customer.body.dateOfBirth,
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
 
         const updated_customer = await agent.put(`/customer/${created_customer.body.id}`).send({
-            name: "senior customer",
-            type: "PERSON",
-            cpf: "942.998.204-70",
+            name: 'senior customer',
+            type: 'PERSON',
+            cpf: '942.998.204-70',
             dateOfBirth: new Date(),
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
         expect(updated_customer.status).toBe(200);
 
@@ -140,15 +140,15 @@ describe('customer api test', () => {
 
         expect(get_updated_customer.status).toBe(200);
         expect(get_updated_customer.body).toMatchObject({
-            name: "senior customer",
-            type: "PERSON",
-            cpf: "942.998.204-70",
+            name: 'senior customer',
+            type: 'PERSON',
+            cpf: '942.998.204-70',
             dateOfBirth: updated_customer.body.dateOfBirth,
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
     });
 
@@ -159,15 +159,15 @@ describe('customer api test', () => {
 
     test('update non-existent customer', async () => {
         const res = await agent.put(`/customer/-1`).send({
-            name: "senior customer",
-            type: "PERSON",
-            cpf: "942.998.204-70",
+            name: 'senior customer',
+            type: 'PERSON',
+            cpf: '942.998.204-70',
             dateOfBirth: new Date(),
-            street: "rua niederauer",
-            streetNumber: "1010",
-            cep: "54767-160",
-            district: "bom fim",
-            city: "santa maria"
+            street: 'rua niederauer',
+            streetNumber: '1010',
+            cep: '54767-160',
+            district: 'bom fim',
+            city: 'santa maria',
         });
         expect(res.status).toBe(404);
     });
@@ -185,12 +185,12 @@ describe('customer api test', () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toMatchObject({
-            activated: false
+            activated: false,
         });
     });
 
     test('change non-existent customer status', async () => {
-        let res = await agent.post(`/customer/-1/status`);
+        const res = await agent.post(`/customer/-1/status`);
         expect(res.status).toBe(404);
     });
 

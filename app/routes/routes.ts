@@ -6,10 +6,10 @@ import LogsController from '../controllers/logsController';
 export default function init(app: Express) {
     app.get('/customers', CustomerController.getAllCustomers);
     app.get('/customer/:id', CustomerController.getCustomerById);
-    app.get('/customers/to/add', CustomerController.getCustomersToAdd)
+    app.get('/customers/to/add', CustomerController.getCustomersToAdd);
     app.post('/customer', CustomerController.createCustomer);
     app.put('/customer/:id', CustomerController.updateCustomer);
-    app.post('/customer/:id/status', CustomerController.changeCustomerStatus)
+    app.post('/customer/:id/status', CustomerController.changeCustomerStatus);
     app.delete('/customer/:id', CustomerController.deleteCustomer);
 
     app.get('/routers', RouterController.getAllRouters);
@@ -17,7 +17,7 @@ export default function init(app: Express) {
     app.post('/router', RouterController.createRouter);
     app.put('/router/:id', RouterController.updateRouter);
     app.put('/router/:id/customers', RouterController.updateRouterCustomers);
-    app.post('/router/:id/status', RouterController.changeRouterStatus)
+    app.post('/router/:id/status', RouterController.changeRouterStatus);
     app.delete('/router/:id', RouterController.deleteRouter);
 
     app.get('/logs', LogsController.getLogs);

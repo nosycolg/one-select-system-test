@@ -6,14 +6,18 @@ import App from './App';
 import './index.css';
 import { ThemeProvider } from '@material-tailwind/react';
 
-import "./lib/i18n"
+import './lib/i18n';
+import { QueryClientProvider } from 'react-query';
+import { queryClient } from './services/queryClient';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <BrowserRouter>
-            <ThemeProvider>
-                <App />
-            </ThemeProvider>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                <ThemeProvider>
+                    <App />
+                </ThemeProvider>
+            </BrowserRouter>
+        </QueryClientProvider>
     </React.StrictMode>
 );

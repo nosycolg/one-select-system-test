@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 class CustomerController {
     async getAllCustomers(req: Request, res: Response) {
         try {
-            const customers = await prisma.customer.findMany()
-            return res.success(customers)
+            const customers = await prisma.customer.findMany();
+            return res.success(customers);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -19,12 +19,12 @@ class CustomerController {
         try {
             const customer = await prisma.customer.findUnique({ where: { id: Number(req.params.id) } });
             if (!customer) {
-                return res.notFound()
+                return res.notFound();
             }
             return res.success(customer);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -32,12 +32,13 @@ class CustomerController {
         try {
             const customers = await prisma.customer.findMany({
                 where: {
-                    routerId: null
-                }
-            }); return res.success(customers)
+                    routerId: null,
+                },
+            });
+            return res.success(customers);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -57,13 +58,13 @@ class CustomerController {
 
             await logActivity(actions.CUSTOMER_CREATED, {
                 CustomerId: data.id,
-                CustomerName: data.name
+                CustomerName: data.name,
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -74,7 +75,7 @@ class CustomerController {
             const customer = await prisma.customer.findUnique({ where: { id: Number(req.params.id) } });
 
             if (!customer) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const { error } = RequestService.validateCustomerData(req.body);
@@ -91,13 +92,13 @@ class CustomerController {
             await logActivity(actions.CUSTOMER_UPDATED, {
                 CustomerId: data.id,
                 OldData: customer,
-                NewData: data
+                NewData: data,
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
@@ -106,29 +107,28 @@ class CustomerController {
             const customer = await prisma.customer.findUnique({ where: { id: Number(req.params.id) } });
 
             if (!customer) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const data = await prisma.customer.delete({ where: { id: Number(req.params.id) } });
 
             await logActivity(actions.CUSTOMER_DELETED, {
                 CustomerId: data.id,
-                CustomerName: data.name
+                CustomerName: data.name,
             });
 
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 
     async changeCustomerStatus(req: Request, res: Response) {
         try {
-            console.log(req.params)
             const customer = await prisma.customer.findUnique({ where: { id: Number(req.params.id) } });
             if (!customer) {
-                return res.notFound()
+                return res.notFound();
             }
 
             const data = await prisma.customer.update({
@@ -139,7 +139,7 @@ class CustomerController {
             return res.success(data);
         } catch (err) {
             // istanbul ignore next
-            return res.badRequest(err)
+            return res.badRequest(err);
         }
     }
 }

@@ -1,10 +1,10 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Loader from "../components/ui/loader";
-import Customers from "../pages/components/subpages/customers/customers";
-import routes from "./index";
-import React from "react";
+import Loader from '../components/ui/loader';
+import Customers from '../pages/components/subpages/customers/customers';
+import routes from './index';
+import React from 'react';
 const Home = lazy(() => import('../pages/index'));
 
 export default function Router() {
@@ -19,8 +19,8 @@ export default function Router() {
     ) : (
         <Suspense fallback={<Loader />}>
             <Routes>
-                <Route path="/">
-                    <Route path="/" element={<Home />}>
+                <Route path='/'>
+                    <Route path='/' element={<Home />}>
                         <Route index element={<Customers />} />
                         {routes.map(({ path, component: Component }) => (
                             <Route
@@ -33,7 +33,7 @@ export default function Router() {
                             />
                         ))}
                     </Route>
-                    <Route path="*" element={<Home />} />
+                    <Route path='*' element={<Home />} />
                 </Route>
             </Routes>
         </Suspense>

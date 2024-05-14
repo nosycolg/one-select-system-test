@@ -14,7 +14,7 @@ async function start() {
         const options = {
             allowedOrigins: allowedOrigins,
             methods: 'GET, POST, PUT, DELETE',
-            allowedHeaders: 'Content-Type, Authorization'
+            allowedHeaders: 'Content-Type, Authorization',
         };
 
         app.use(bodyParser.json());

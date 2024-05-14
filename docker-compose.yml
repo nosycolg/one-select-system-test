@@ -1,36 +1,35 @@
-version: "3"
+version: '3'
 
 services:
-  elasticsearch01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
-    container_name: elasticsearch01
-    ports: 
-      - 9200:9200
-      - 9300:9300
-    environment:
-      discovery.type: single-node
+    elasticsearch01:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+        container_name: elasticsearch01
+        ports:
+            - 9200:9200
+            - 9300:9300
+        environment:
+            discovery.type: single-node
 
-  db:
-    env_file:
-      - .env
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - ${DB_PORT}:${DB_PORT}
-    volumes:
-      - db:/var/lib/mysql
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    networks:
-      - backend
+    db:
+        env_file:
+            - .env
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        volumes:
+            - db:/var/lib/mysql
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        networks:
+            - backend
 volumes:
-  db:
-
+    db:
 
 networks:
-  backend:
-    driver: bridge
+    backend:
+        driver: bridge

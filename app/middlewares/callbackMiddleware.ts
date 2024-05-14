@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express"
+import { NextFunction, Request, Response } from 'express';
 
 declare global {
     namespace Express {
@@ -12,20 +12,20 @@ declare global {
 
 export default (request: Request, response: Response, next: NextFunction) => {
     response.badRequest = (errorCode?: string, message?: string) => {
-        return response.status(400).json({ error: { code: errorCode, message: message } })
-    }
+        return response.status(400).json({ error: { code: errorCode, message: message } });
+    };
 
     response.notFound = (errorCode?: string, message?: string) => {
-        return response.status(404).json({ error: { code: errorCode, message: message } })
-    }
+        return response.status(404).json({ error: { code: errorCode, message: message } });
+    };
 
     response.success = (data?: unknown) => {
-        response.status(200)
+        response.status(200);
 
-        if (data) return response.json(data)
+        if (data) return response.json(data);
 
-        return response.end()
-    }
+        return response.end();
+    };
 
-    next()
-}
+    next();
+};

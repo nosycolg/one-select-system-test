@@ -1,27 +1,18 @@
 {
-  "compilerOptions": {
-    "typeRoots": [
-      "@types"
-    ],
-    "types": [
-      "express",
-      "mocha"
-    ],
-    "target": "es2017",
-    "lib": [
-      "ES6"
-    ],
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-  },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+    "compilerOptions": {
+        "typeRoots": ["@types"],
+        "types": ["express", "mocha"],
+        "target": "es2017",
+        "lib": ["ES6"],
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
+    },
+    "include": ["src"],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
+    ]
 }

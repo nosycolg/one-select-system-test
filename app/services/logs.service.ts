@@ -1,4 +1,4 @@
-import elasticClient from "../config/elastic";
+import elasticClient from '../config/elastic';
 
 enum actions {
     CUSTOMER_CREATED = 'LOG_ACTION_CUSTOMER_CREATED',
@@ -17,20 +17,19 @@ async function logActivity(action: actions, details: unknown) {
             details,
             timestamp: new Date(),
         },
-        type: "_doc",
-        
+        type: '_doc',
     });
 }
 
 async function searchLogs(action?: actions) {
     try {
-        const query = action ? { match: { action } } : { match_all: {} };
+        const query = action?.length ? { match: { action } } : { match_all: {} };
 
         const data = await elasticClient.search({
             index: 'logs',
             body: {
-                query
-            }
+                query,
+            },
         });
         return data.hits.hits;
     } catch (error) {
