@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useRef, useState } from 'react';
 import { CustomerData, CustomerManagementData, RouterData } from '../../services/api';
@@ -19,7 +20,7 @@ const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow
     const modalRef = useRef<HTMLDivElement>(null);
     const { data: customers_to_add, refetch } = useCustomersToAdd();
     const [customersToAdd, setCustomersToAdd] = useState<CustomerData[]>([]);
-    const [customersToRemove, setCustomersToRemove] = useState<CustomerData[]>(router.customers);
+    const [customersToRemove, setCustomersToRemove] = useState<CustomerData[]>([]);
     const handleCloseModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
             setCustomersToAdd([]);
@@ -37,7 +38,7 @@ const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow
         if (customers_to_add) {
             setCustomersToAdd(customers_to_add);
         }
-    }, [show]);
+    }, [customers_to_add, refetch, router.customers, show]);
 
     const handleMoveToAdding = (customer: CustomerData) => {
         setCustomersToRemove(customersToRemove.filter((c) => c !== customer));

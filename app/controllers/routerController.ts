@@ -138,7 +138,7 @@ class RouterController {
                 },
             });
 
-            const customer = await prisma.router.update({
+            await prisma.router.update({
                 where: { id: Number(req.params.id) },
                 data: {
                     customers: {
@@ -147,7 +147,16 @@ class RouterController {
                 },
             });
 
-            return res.success(customer);
+            await logActivity(actions.ROUTER_CUSTOMERS_CHANGED, {
+                RouterId: router.id,
+                RouterCustomersAdded: filteredCustomersToAdd,
+                RouterCustomersRemoved: filteredCustomersToRemove
+            });
+
+            return res.success({
+                customersToAdd,
+                customersToRemove
+            });
         } catch (err) {
             // istanbul ignore next
             return res.badRequest(err);
@@ -165,6 +174,11 @@ class RouterController {
             const data = await prisma.router.update({
                 where: { id: Number(req.params.id) },
                 data: { activated: !router.activated },
+            });
+
+            await logActivity(actions.ROUTER_STATUS_CHANGED, {
+                RouterId: data.id,
+                isActivated: String(!router.activated)
             });
 
             return res.success(data);

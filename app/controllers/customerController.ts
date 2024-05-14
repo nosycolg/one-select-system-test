@@ -136,6 +136,12 @@ class CustomerController {
                 data: { activated: !customer.activated },
             });
 
+            await logActivity(actions.CUSTOMER_STATUS_CHANGED, {
+                CustomerId: data.id,
+                CustomerName: data.name,
+                isActivated: !customer.activated
+            });
+
             return res.success(data);
         } catch (err) {
             // istanbul ignore next

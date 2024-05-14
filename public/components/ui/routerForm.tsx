@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react';
 import { RouterData } from '../../services/api';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -31,7 +32,7 @@ const RouterForm: React.FC<RouterFormProps> = ({ showForm, setShowForm, type, ro
             setValue('brand', router.brand);
             setValue('model', router.model);
         }
-    }, [showForm, router, type]);
+    }, [showForm, router, type, setValue]);
 
     function handleCloseModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {

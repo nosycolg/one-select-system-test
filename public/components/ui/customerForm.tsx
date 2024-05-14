@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import { CustomerData, apiService } from '../../services/api';
 import { Option, Select } from '@material-tailwind/react';
@@ -44,7 +45,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
             setValue('city', customer.city);
             setCustomerType(customer.type);
         }
-    }, [showForm, customer, type]);
+    }, [showForm, customer, type, setValue]);
 
     function handleCloseModal(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
