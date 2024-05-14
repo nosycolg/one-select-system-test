@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { NextFunction, Request, Response } from 'express';
 
 declare global {
@@ -22,7 +24,9 @@ export default (request: Request, response: Response, next: NextFunction) => {
     response.success = (data?: unknown) => {
         response.status(200);
 
-        if (data) return response.json(data);
+        if (data) {
+            return response.json(data);
+        }
 
         return response.end();
     };

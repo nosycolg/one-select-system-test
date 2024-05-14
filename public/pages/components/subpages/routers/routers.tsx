@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { RouterData, apiService } from '../../../../services/api';
+import React, { useState } from 'react';
+import { CustomerManagementData, RouterData } from '../../../../services/api';
 import { MdEdit } from 'react-icons/md';
 import { IoMdTrash } from 'react-icons/io';
-import { FaSearch } from 'react-icons/fa';
 import RouterForm from '../../../../components/ui/routerForm';
 import RouterDelete from '../../../../components/ui/routerDelete';
 import { FaPerson } from 'react-icons/fa6';
 import CustomerManagement from '../../../../components/ui/customerManagement';
 import { useTranslation } from 'react-i18next';
-import { useCreateRouter, useChangeRouterStatus, useDeleteRouter, useUpdateRouter, useRouters } from '../../../../hooks/useRouters';
+import { useCreateRouter, useChangeRouterStatus, useDeleteRouter, useUpdateRouter, useRouters, useCustomerAssociation } from '../../../../hooks/useRouters';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Drawer } from '@material-tailwind/react';
 import Sidebar from '../../sidebar';
@@ -24,6 +23,7 @@ export default function Routers() {
     const { mutate: update_router } = useUpdateRouter();
     const { mutate: change_router_status } = useChangeRouterStatus();
     const { mutate: delete_router } = useDeleteRouter();
+    const { mutate: customer_association } = useCustomerAssociation();
     const { data: routers, refetch } = useRouters();
     const [open, setOpen] = useState(false);
 
@@ -40,7 +40,9 @@ export default function Routers() {
     }
 
     function updateRouter(data: RouterData) {
-        if (!router) return;
+        if (!router) {
+            return;
+        }
         update_router(
             { routerId: router.id, data },
             {
@@ -52,6 +54,19 @@ export default function Routers() {
         );
     }
 
+    function addCustomers(data: CustomerManagementData) {
+        if (!router) {
+            return;
+        }
+
+        customer_association({ routerId: router.id, data }, {
+            onSuccess: () => {
+                setShowCustomersModal(false);
+                refetch();
+            },
+        });
+    }
+
     function changeRouterStatus(routerId: number) {
         change_router_status(routerId, {
             onSuccess: () => {
@@ -61,7 +76,9 @@ export default function Routers() {
     }
 
     function deleteRouter() {
-        if (!router) return;
+        if (!router) {
+            return;
+        }
         delete_router(router.id, {
             onSuccess: () => {
                 setShowDeleteModal(false);
@@ -185,8 +202,8 @@ export default function Routers() {
                 <Sidebar className='min-h-screen bg-white border-r-[1px] border-r-slate-200 top-0 fixed px-5 gap-5 z-50 overflow-y-auto' />
             </Drawer>
             <RouterForm showForm={showForm} type={typeForm} setShowForm={setShowForm} router={router} createRouter={createRouter} updateRouter={updateRouter} />
-            <RouterDelete showModal={showDeleteModal} setShowModal={setShowDeleteModal} router={router} deleteRouter={deleteRouter} />
-            <CustomerManagement router={router} setShow={setShowCustomersModal} show={showCustomersModal} />
+            <RouterDelete showModal={showDeleteModal} setShowModal={setShowDeleteModal} deleteRouter={deleteRouter} />
+            <CustomerManagement router={router} setShow={setShowCustomersModal} show={showCustomersModal} addCustomers={addCustomers} />
         </>
     );
 }

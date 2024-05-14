@@ -37,7 +37,9 @@ export default function Customers() {
     }
 
     function updateCustomer(data: CustomerData) {
-        if (!customer) return;
+        if (!customer) {
+            return;
+        }
         update_customer(
             { customerId: customer.id, data },
             {
@@ -58,7 +60,9 @@ export default function Customers() {
     }
 
     function deleteCustomer() {
-        if (!customer) return;
+        if (!customer) {
+            return;
+        }
         delete_customer(customer.id, {
             onSuccess: () => {
                 setShowModal(false);

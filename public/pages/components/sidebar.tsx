@@ -7,7 +7,7 @@ import { Option, Select } from '@material-tailwind/react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../lib/i18n';
 
-export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {}
+export interface SidebarProps extends React.HTMLAttributes<HTMLElement> { }
 
 export default function Sidebar(props: SidebarProps) {
     {
@@ -22,11 +22,11 @@ export default function Sidebar(props: SidebarProps) {
             }
         }, []);
 
-        function handleChangeLanguage(val: string) {
+        const handleChangeLanguage = (val: string) => {
             setValue(val);
             i18n.changeLanguage(val);
             localStorage.setItem('language', val);
-        }
+        };
 
         return (
             <div className={props.className}>
@@ -68,7 +68,9 @@ export default function Sidebar(props: SidebarProps) {
                             defaultChecked={true}
                             value={value}
                             onChange={(val) => {
-                                if (!val) return;
+                                if (!val) {
+                                    return;
+                                }
                                 handleChangeLanguage(val);
                             }}
                             label={t('GENERIC_LANGUAGE')}

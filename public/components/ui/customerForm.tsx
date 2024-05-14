@@ -109,7 +109,9 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ showForm, setShowForm, type
                                     <Select
                                         value={getValues('type')}
                                         onChange={(val) => {
-                                            if (!val) return;
+                                            if (!val) {
+                                                return;
+                                            }
                                             setValue('type', val);
                                             setCustomerType(val);
                                             if (val == 'PERSON') {

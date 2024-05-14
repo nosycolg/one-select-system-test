@@ -1,15 +1,13 @@
 import React, { useRef } from 'react';
-import { RouterData, apiService } from '../../services/api';
 import { useTranslation } from 'react-i18next';
 
 interface RouterDeleteProps {
     showModal: boolean;
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     deleteRouter: () => void;
-    router?: RouterData;
 }
 
-const RouterDelete: React.FC<RouterDeleteProps> = ({ showModal, setShowModal, router, deleteRouter }) => {
+const RouterDelete: React.FC<RouterDeleteProps> = ({ showModal, setShowModal, deleteRouter }) => {
     const { t } = useTranslation();
     const modalRef = useRef<HTMLDivElement>(null);
     const handleCloseModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -40,7 +38,7 @@ const RouterDelete: React.FC<RouterDeleteProps> = ({ showModal, setShowModal, ro
                             <button
                                 className='block w-full select-none rounded-lg bg-gradient-to-tr from-red-900 to-red-800 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'
                                 type='submit'
-                                onClick={() => deleteRouter()}
+                                onClick={deleteRouter}
                             >
                                 {t('GENERIC_DELETE')}
                             </button>

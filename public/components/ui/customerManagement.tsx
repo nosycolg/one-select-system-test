@@ -1,28 +1,43 @@
-import React, { useRef, useState } from 'react';
-import { CustomerData, RouterData } from '../../services/api';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useRef, useState } from 'react';
+import { CustomerData, CustomerManagementData, RouterData } from '../../services/api';
 import { useCustomersToAdd } from '../../hooks/useCustomers';
-import { useCustomerAssociation } from '../../hooks/useRouters';
 import { useTranslation } from 'react-i18next';
 
 interface RouterDeleteProps {
     show: boolean;
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
+    addCustomers: (data: CustomerManagementData) => void;
     router?: RouterData;
 }
 
-const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow }) => {
-    if (!router) return null;
+const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow, addCustomers }) => {
+    if (!router) {
+        return null;
+    }
     const { t } = useTranslation();
     const modalRef = useRef<HTMLDivElement>(null);
     const { data: customers_to_add, refetch } = useCustomersToAdd();
-    const { mutate: customer_association } = useCustomerAssociation();
-    const [customersToAdd, setCustomersToAdd] = useState<CustomerData[]>(customers_to_add || []);
-    const [customersToRemove, setCustomersToRemove] = useState<CustomerData[]>(router.customers || []);
+    const [customersToAdd, setCustomersToAdd] = useState<CustomerData[]>([]);
+    const [customersToRemove, setCustomersToRemove] = useState<CustomerData[]>(router.customers);
     const handleCloseModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-            closeModal();
+            setCustomersToAdd([]);
+            setCustomersToRemove([]);
+            setShow(false);
         }
     };
+
+    useEffect(() => {
+        refetch();
+        if(router.customers) {
+            setCustomersToRemove(router.customers);
+        }
+
+        if (customers_to_add) {
+            setCustomersToAdd(customers_to_add);
+        }
+    }, [show]);
 
     const handleMoveToAdding = (customer: CustomerData) => {
         setCustomersToRemove(customersToRemove.filter((c) => c !== customer));
@@ -34,9 +49,11 @@ const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow
         setCustomersToRemove([...customersToRemove, customer]);
     };
 
-    function addCustomers() {
+    function customersData() {
         try {
-            if (!router) return;
+            if (!router) {
+                return;
+            }
 
             const customersToAddIds = customersToAdd.map((customer) => customer.id);
             const customersToRemoveIds = customersToRemove.map((customer) => customer.id);
@@ -46,22 +63,10 @@ const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow
                 customersToRemove: customersToAddIds,
             };
 
-            customer_association(
-                { routerId: router.id, data },
-                {
-                    onSuccess: () => {
-                        setShow(false);
-                        refetch();
-                    },
-                }
-            );
+            addCustomers(data);
         } catch (err) {
             console.error(err);
         }
-    }
-
-    function closeModal() {
-        setShow(false);
     }
 
     return (
@@ -106,10 +111,7 @@ const CustomerManagement: React.FC<RouterDeleteProps> = ({ router, show, setShow
                         </div>
                         <button
                             className='block w-full select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'
-                            onClick={() => {
-                                addCustomers();
-                                closeModal();
-                            }}
+                            onClick={customersData}
                         >
                             {t('GENERIC_CONFIRM')}
                         </button>

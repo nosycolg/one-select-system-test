@@ -1,9 +1,10 @@
 import Joi from 'joi'; // also has the class-validator
+import { CustomerData, RouterData } from '../../public/services/api';
 
 // can also be done manually with case or if's
 
 export class RequestService {
-    static validateCustomerData(data: any) {
+    static validateCustomerData(data: CustomerData) {
         const schema = Joi.object({
             name: Joi.string().required(),
             type: Joi.string().valid('PERSON', 'COMPANY').required(),
@@ -36,7 +37,7 @@ export class RequestService {
         return schema.validate(data);
     }
 
-    static validateRouterData(data: any) {
+    static validateRouterData(data: RouterData) {
         const schema = Joi.object({
             IPv4: Joi.string()
                 .regex(/^(\d{1,3}\.){3}\d{1,3}$/)

@@ -1,18 +1,7 @@
-import { FaHome } from 'react-icons/fa';
 import { FaPerson } from 'react-icons/fa6';
 import { BsFillRouterFill } from 'react-icons/bs';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { IoMdListBox } from 'react-icons/io';
-
-export interface SubMenuProps {
-    title: string;
-    path: string;
-    beta?: boolean;
-    new?: boolean;
-    soon?: boolean;
-    description: string;
-    icon: ReactElement<any, any>;
-}
 
 export interface SidebarItems {
     title: string;
@@ -20,7 +9,6 @@ export interface SidebarItems {
     icon: React.ReactNode;
     separated?: boolean;
     submenu?: boolean;
-    submenuItems?: SubMenuProps[];
     chevron?: React.ReactNode;
 }
 

@@ -1,8 +1,8 @@
 {
     "translation": {
-        "GENERIC_DETAIL": "DETALHE",
-        "GENERIC_ACTION": "AÇÃO",
-        "LOGS_ACTIONS": "AÇÕES DE REGISTROS",
+        "GENERIC_DETAIL": "Detalhe",
+        "GENERIC_ACTION": "Ação",
+        "LOGS_ACTIONS": "Ações de registros",
         "ALL_LOGS": "TODOS OS REGISTROS",
         "LOG_ACTION_CUSTOMER_CREATED": "CLIENTE CRIADO",
         "LOG_ACTION_CUSTOMER_UPDATED": "CLIENTE ATUALIZADO",
@@ -46,7 +46,7 @@
         "GENERIC_BRAND": "Marca",
         "GENERIC_MODEL": "Modelo",
         "GENERIC_CUSTOMERS_TO_REMOVE": "Clientes para remover",
-        "GENERIC_CUSTOMERS_TO_ADD": "CLientes para adicionar",
+        "GENERIC_CUSTOMERS_TO_ADD": "Clientes para adicionar",
         "GENERIC_CONFIRM": "Confirmar"
     }
 }

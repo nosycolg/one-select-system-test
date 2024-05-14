@@ -2,7 +2,7 @@
     "translation": {
         "GENERIC_DETAIL": "Detail",
         "GENERIC_ACTION": "Action",
-        "LOGS_ACTIONS": "LOGS ACTIONS",
+        "LOGS_ACTIONS": "Logs actions",
         "ALL_LOGS": "ALL LOGS",
         "LOG_ACTION_CUSTOMER_CREATED": "CUSTOMER CREATED",
         "LOG_ACTION_CUSTOMER_UPDATED": "CUSTOMER UPDATED",
